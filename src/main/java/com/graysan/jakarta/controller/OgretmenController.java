@@ -7,7 +7,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Path("/ogretmen")
@@ -116,16 +115,17 @@ public class OgretmenController {
     @POST
     @Path(value = "save")
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response save(Ogretmen ogr){
-        try {
-            if (ogretmenRepository.save(ogr)){
-                Response.status(Response.Status.CREATED).entity("Başarı ile kaydedildi");
-            }else {
+    public Response save(Ogretmen ogr)
+    {
+        try
+        {
+            if (ogretmenRepository.save(ogr)) {
+                return Response.status(Response.Status.CREATED).entity("Başarı ile kaydedildi").build();
+            } else {
                 return Response.serverError().entity("Başarı ile kaydedilemedi").build();
             }
         } catch (Exception e) {
             return Response.serverError().entity("Bir hata oluştu -> " + e.getClass()).build();
         }
-        return ;
     }
 }
